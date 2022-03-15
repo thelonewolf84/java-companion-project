@@ -15,41 +15,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.organization.mvcproject.api.model.Game;
-import com.organization.mvcproject.api.service.GameService;
-import com.organization.mvcproject.model.GameImpl;
+import com.organization.mvcproject.model.Game;
+import com.organization.mvcproject.service.GameService;
 
-
-@RequestMapping(value ="/game")
 @RestController
+@RequestMapping(value = "/game")
 public class GameController {
-
+	
 	@Autowired
 	private GameService gameService;
-
-
-
+	
 	@GetMapping(value = "/getAll")
 	public ResponseEntity<List<Game>> fetchAllGames() {
 		return new ResponseEntity<List<Game>>(gameService.retrieveAllGames(), HttpStatus.OK);
 	}
-
+	
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> createGame(@RequestBody GameImpl game) {
+	public ResponseEntity<Void> createGame(@RequestBody Game game) {
 		gameService.saveGame(game);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateGame(@RequestBody GameImpl game) {		
-		return new ResponseEntity<>(gameService.saveGame(game), HttpStatus.OK);
+	public ResponseEntity<Void> updateGame(@RequestBody Game game){
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	// URL localhost:8081/game/1  (DELETE)  
-	@DeleteMapping(value = "/{id}" )
-	public ResponseEntity<?> deleteGame(@PathVariable("id") Long gameId ){	
-		return new ResponseEntity<>(gameService.deleteGame(gameId), HttpStatus.OK);
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Game> deleteGame(@PathVariable("id") Long gameId){
+		Game game = gameService.findGameById(gameId);
+		gameService.deleteGame(gameId);
+		return new ResponseEntity<>(game, HttpStatus.OK);
 	}
-	
 	
 }
