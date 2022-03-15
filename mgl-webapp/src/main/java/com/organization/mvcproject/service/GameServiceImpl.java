@@ -1,15 +1,15 @@
 package com.organization.mvcproject.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.organization.mvcproject.dao.MockDAO;
 import com.organization.mvcproject.model.Game;
 
-//TODO 1.0  "javaGameService" service reference name is not necessary, remove it.
 @Service
-public class GameServiceImpl implements GameService {
+public class GameServiceImpl implements GameService{
 
 	/**
 	 * TODO 2.0 The class that interacts with persistent data is called a Data Access Object(DAO)
@@ -18,47 +18,31 @@ public class GameServiceImpl implements GameService {
 	 *  Move this list, and methods operating on this list to an appropriately named package and class.
 	 */
 	
-	private static Long gameId = new Long(0);
-	private static Long companyId = new Long(0);
-	private static List<Game> games = new ArrayList<Game>();
-
-	static {
-		games = populateGames();
+	@Autowired
+	private MockDAO mockDAO;
+	
+	
+	public List<Game> retrieveAllGames(){
+		return mockDAO.retrieveAllGames();
 	}
-
-	private static List<Game> populateGames() {
-
-		Game game1 = new Game();
-		game1.setId(++gameId);
-		game1.setGenre("Sport");
-		game1.setName("Rocket League");
-
-		Game game2 = new Game();
-		game2.setId(++gameId);
-		game2.setGenre("Shooter");
-		game2.setName("Halo 3");
-
-		Game game3 = new Game();
-		game3.setId(++gameId);
-		game3.setGenre("MMORPG");
-		game3.setName("Runescape");
-
-		games.add(game1);
-		games.add(game2);
-		games.add(game3);
-
-		return games;
+	
+	public Game findGameById(Long id) {
+		return mockDAO.findGameById(id);
 	}
-
-	@Override
-	public List<Game> retrieveAllGames() {
-		return games;
-	}
-
-	@Override
+	
 	public Game saveGame(Game game) {
-		game.setId(++gameId);
-		games.add(game);
-		return game;
+		return mockDAO.saveGame(game);
+	}
+	
+	public List<Game> findGamesByGenre(String genre) {
+		return mockDAO.findGamesByGenre(genre);
+	}
+	
+	public Game updateGame(Long id) {
+		return mockDAO.updateGame(id);
+	}
+	
+	public boolean deleteGame(Long id) {
+		return mockDAO.deleteGame(id);
 	}
 }
