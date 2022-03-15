@@ -12,7 +12,7 @@ angular.module('MGL_Task1_app').factory('MGL_Task1_Service', ['$http', function(
 		return factory;
 
 		function fetchAllGames() {
-			return $http.get(REST_SERVICE_URI).then(function(response) {
+			return $http.get(REST_SERVICE_URI + 'getAll').then(function(response) {
 					return response.data;
 				}
 			);
