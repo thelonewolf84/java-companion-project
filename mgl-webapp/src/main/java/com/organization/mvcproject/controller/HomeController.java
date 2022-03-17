@@ -1,6 +1,11 @@
 package com.organization.mvcproject.controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,9 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.organization.mvcproject.model.Game;
 import com.organization.mvcproject.model.Review;
+import com.organization.mvcproject.service.GameService;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private GameService gameService;
    
 	@RequestMapping(value="/hello")
     public ModelAndView hello(@RequestParam(required=false, defaultValue="World") String name) {
@@ -47,6 +56,13 @@ public class HomeController {
 	public ModelAndView game() {
 		return new ModelAndView("gamesPage", "command", new Game());
 	}
+	
+//	@DeleteMapping(value = "/games/{id}")
+//	public ModelAndView deleteGame(@PathVariable("id") Long gameId){
+//		Game game = gameService.findGameById(gameId);
+//		gameService.deleteGame(gameId);
+//		return new ModelAndView("gamesPage", "deletedGame", game);
+//	}
 
 	/**
 	 * TODO 2.0 (Separation of concerns) consider moving all controller endpoints that return a ResponseEntity into a @RestController.

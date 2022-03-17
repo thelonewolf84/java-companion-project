@@ -15,12 +15,19 @@ angular.module('MGL_Task1_app').controller('MGL_Task1_Controller',
 					self.games = data;
 				});
 			}
+			
 
 			self.addGame = function(){
 				return MGL_Task1_Service.createGame(self.game).then( function() {
 				self.fetchAllGames();
 				});
 			}
-
+		
 			self.fetchAllGames();
-		} ]);
+			
+			self.deleteGame = function(game){
+				return MGL_Task1_Service.deleteGame(game.id).then( function() {
+				self.fetchAllGames();
+				});
+			}
+		}]);

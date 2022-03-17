@@ -94,8 +94,8 @@ public class MockDAO{
 	
 	public boolean deleteGame(Long id) {
 		for(int i = 0; i < games.size(); i++) {
-			if(games.get(i).getId() == id) {
-				games.remove(i);
+			if(games.get(i).getId().equals(id)) {
+				games.remove(games.get(i));
 				return true;
 			}
 		}
