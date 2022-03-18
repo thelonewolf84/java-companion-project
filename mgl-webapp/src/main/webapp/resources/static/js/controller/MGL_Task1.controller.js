@@ -30,4 +30,8 @@ angular.module('MGL_Task1_app').controller('MGL_Task1_Controller',
 				self.fetchAllGames();
 				});
 			}
+			
+			self.updateGame = function(game){
+				self.game = game;
+			}
 		}]);
