@@ -56,7 +56,7 @@ public class MockDAO{
 	
 	public Game findGameById(Long id) {
 		for(Game game : games) {
-			if(game.getId() == id) {
+			if(game.getId().equals(id)) {
 				return game;
 			}	
 		}
@@ -66,9 +66,14 @@ public class MockDAO{
 
 	
 	public Game saveGame(Game game) {
-		game.setId(++gameId);
-		games.add(game);
-		return game;
+		Game compareGame = findGameById(game.getId());
+		if(game.getId().equals(compareGame.getId()) && game.getName().equals(compareGame.getName())) {
+			return null;
+		}else {
+			game.setId(++gameId);
+			games.add(game);
+			return game;
+		}
 	}
 	
 	public List<Game> findGamesByGenre(String genre){
@@ -94,8 +99,8 @@ public class MockDAO{
 	
 	public boolean deleteGame(Long id) {
 		for(int i = 0; i < games.size(); i++) {
-			if(games.get(i).getId() == id) {
-				games.remove(i);
+			if(games.get(i).getId().equals(id)) {
+				games.remove(games.get(i));
 				return true;
 			}
 		}

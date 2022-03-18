@@ -37,15 +37,14 @@ public class GameController {
 	}
 	
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> updateGame(@RequestBody Game game){
-		return new ResponseEntity<Void>(HttpStatus.OK);
+	public ResponseEntity<Game> updateGame(@RequestBody Game game){
+		return new ResponseEntity<Game>(game, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Game> deleteGame(@PathVariable("id") Long gameId){
-		Game game = gameService.findGameById(gameId);
-		gameService.deleteGame(gameId);
-		return new ResponseEntity<>(game, HttpStatus.OK);
+	public ResponseEntity<Void> deleteGame(@PathVariable("id") String gameId){
+		gameService.deleteGame(Long.valueOf(gameId));
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 }
